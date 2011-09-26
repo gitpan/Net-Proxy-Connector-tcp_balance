@@ -1,0 +1,13 @@
+Changes
+LICENSE
+MANIFEST
+META.yml
+Makefile.PL
+README
+lib/Net/Proxy/Connector/tcp_balance.pm
+t/00-compile.t
+t/author-critic.t
+t/release-kwalitee.t
+t/release-pod-coverage.t
+t/release-pod-syntax.t
+t/tcp_balance.t
