@@ -1,7 +1,7 @@
 
 
 This archive contains the distribution Net-Proxy-Connector-tcp_balance,
-version 0.001:
+version 0.002:
 
   A Net::Proxy connector for outbound tcp balancing and failover
 

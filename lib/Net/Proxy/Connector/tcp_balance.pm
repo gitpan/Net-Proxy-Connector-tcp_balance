@@ -1,9 +1,10 @@
-## no critic
+## no critic (RequireUseStrict)
 package Net::Proxy::Connector::tcp_balance;
 {
-  $Net::Proxy::Connector::tcp_balance::VERSION = '0.001';
+  $Net::Proxy::Connector::tcp_balance::VERSION = '0.002';
 }
-## use critic
+
+## use critic (RequireUseStrict)
 use strict;
 use warnings;
 
@@ -33,38 +34,34 @@ Net::Proxy::Connector::tcp_balance
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 
-=over 4
+    # sample proxy using Net::Proxy::Connector::tcp_balance
+    use Net::Proxy;
+    use Net::Proxy::Connector::tcp_balance; # optional
 
-use Net::Proxy;
-use Net::Proxy::Connector::tcp_balance; # optional
+    # proxy connections from localhost:6789 to remotehost:9876
+    # using standard TCP connections
+    my $proxy = Net::Proxy->new(
+        {   in  => { type => 'tcp', port => '6789' },
+            out => { type => 'tcp_balance', hosts => [ 'remotehost1', 'remotehost2' ], port => '9876' },
+        }
+    );
+    $proxy->register();
 
-# proxy connections from localhost:6789 to remotehost:9876
-# using standard TCP connections
-my $proxy = Net::Proxy->new(
-    {   in  => { type => 'tcp', port => '6789' },
-        out => { type => 'tcp_balance', hosts => [ 'remotehost1', 'remotehost2' ], port => '9876' },
-    }
-);
+    Net::Proxy->mainloop();
 
-# register the proxy object
-$proxy->register();
-
-# and now proxy connections indefinitely
-Net::Proxy->mainloop();
-
-=back
-
-=head1 SYNOPSIS
+=head1 NAME
 
 Net::Proxy::Connector::tcp_balance - connector for outbound tcp balancing and failover
 
 =head1 DESCRIPTION 
 
 C<Net::Proxy::Connector::tcp_balance> is an outbound tcp connector for C<Net::Proxy> that provides randomized load balancing and also provides failover when outbound tcp hosts are unavailable.
+
+It will randomly connect to one of the specified hosts. If that host is unavailable, it will continue to try the other hosts until it makes a connection.
 
 The capabilities of the C<Net::Proxy::Connector::tcp_balance> are otherwise identical to those C<Net::Proxy::Connector::tcp>
 
